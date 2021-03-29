@@ -1,0 +1,44 @@
+<!-- 
+    Title: index.ejs
+    Author: Soliman Abdelmalak
+    Date: 3/28/2021
+    Description: EJS with bootstrap.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EJS Views Assignment</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                nav-link" href="#">Home
+                <a class="nav-link" href="#">Home </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+            </li>
+        </ul>
+      <div class="container">
+          <br>
+          <br>
+          <h2>EJS Views Example</h2>
+
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="alert alert-success" role="alert">
+                <strong>First Name: <span><%= firstName %></span>
+                <br>
+                <strong>Last Name: <span><%= lastName %></span>
+                <br>
+                <strong>Address: <span><%= address %></span>
+             </div>
+           </div>
+        </div>
+      </div>
+  </body>
+</html>
