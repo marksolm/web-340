@@ -1,0 +1,16 @@
+{
+ "name": "json-api",
+ "author": {
+  "firstName": "Soliman",
+  "lastName": "Abdelmalak",
+  "email": "domainname@gmail.com",
+  "address": " 2nd street",
+  "city": "philadelphia",
+  "state": "pennsylvania",
+  "zip": "19104"
+ },
+  "private": true,
+  "dependencies": {
+  "express": "^4.17.1"
+ }
+}
