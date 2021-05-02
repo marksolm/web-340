@@ -6,7 +6,7 @@
 ; Description: Create a Function used in a Chai test.
 =====================================================
 */
-// Create a function to make split the array by commas
+// Create a fruits() function that splits a comma separated string into an array
 function getFruits(str) {
     return str.split(',');
    }
