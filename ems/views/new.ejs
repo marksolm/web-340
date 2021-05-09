@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include header %>
+
+  <body>
+    <% include navbar %>
+
+    <div role="main" class="container" style="width: 50%;">
+      <br /><br />
+
+      <h2><%= message %></h2>
+
+        <div class="form-group">
+          <!-- CSRF token -->
+          <input name="_csrf" value="<%= csrfToken %>" type="hidden" />
+
+          <button type="submit" class="btn btn-secondary float-right">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <% include scripts %>
+  </body>
+  <% include footer %>

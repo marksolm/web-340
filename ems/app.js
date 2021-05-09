@@ -6,14 +6,19 @@
 */
 
 // require statements
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var logger = require('morgan');
-var Employee = require("./models/employee");
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var helmet = require("helmet");
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const logger = require('morgan');
+const Employee = require("./models/employee");
+const bodyParser = require('body-parser');
+const cookieParser = require("cookie-parser");
+const csrf = require("csurf");
+const mongoose = require('mongoose');
+const helmet = require("helmet");
+
+// setup csrf protection
+let csrfProtection = csrf({cookie: true});
 
 
 // connect to mongoose database
@@ -28,29 +33,54 @@ db.once('open', function() {
   console.log('Application connected to nLab MongoDB instance');
 });
 var app = express();
+
+/**
+ * Sets up the view engine, view's directory path, and the server port.
+ */
+ app.set("views", path.resolve(__dirname, "views"));
+ app.set("view engine", "ejs");
+ app.set("port", process.env.PORT || 8080);
+ 
 app.use(logger("short"));//use morgan for logging
-app.use(helmet.xssFilter());
-app.use(bodyParser.urlencoded ({  // Use Body Parser to parse the incoming request
+// Body parser
+app.use(bodyParser.urlencoded({
   extended: true
 }));
+// Cookie parser
+app.use(cookieParser());
+// Helmet
+app.use(helmet.xssFilter());
+// CSRF protection
+app.use(csrfProtection);
+app.use(function(request, response, next) {
+  var token = request.csrfToken();
+  response.cookie('XSRF-TOKEN', token);
+  response.locals.csrfToken = token;
+  next();
+});
+
+
 // Create the Employee Model
 let employee = new Employee({
   firstName: "firstName",
   lastName: "lastName",
 });
 
-app.set("views", path.resolve(__dirname, "views"));
-
-app.set("view engine", "ejs");
-app.set("port", process.env.PORT || 8080);
+app.get('/new', function(req, res) {
+  res.render('new', {
+    title: 'New Entry',
+    message: "New Employee Entry Page"
+  });
+})
 
 app.get("/", function (request, response) {
+ 
+  response.render("index", {
 
-    response.render("index", {
-
-        title: "Home page"
-    });
+      title: "Home page"
+  });
 });
+
 // Create a function that accept and response to the about page request.
 app.get("/about", function(request, response) {
   response.render("about", {
@@ -77,6 +107,11 @@ app.get("/", function(request, response) {
   });
 
 });
+app.post("/process", function(request, response) {
+  console.log(request.body.txtName);
+  response.redirect("/");
+});
+
 // create/start Node server
 http.createServer(app).listen(8080, function() {
     console.log("Application started on port 8080!");
