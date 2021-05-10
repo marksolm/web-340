@@ -49,6 +49,7 @@ app.use(logger("short"));//use morgan for logging
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 // Cookie parser
 app.use(cookieParser());
 // Helmet
@@ -62,45 +63,29 @@ app.use(function(request, response, next) {
   next();
 });
 
-// http calls
-app.get("/", function (request, response) {
-  Employee.find({}, function (error, employees) {
-    if (error) throw error;
-    if (employees.length > 0)
-      response.render("index", {
-        title: "Employee List",
-        message: "Employee Records",
-        employees: employees,
-      });
+app.post("/process", function(request, response) {
+  console.log(request.body.txtName);
+  response.redirect("/");
+});
+
+
+// Standard req and res function.
+app.get("/", function (req, res) {
+  res.render("index", {
+      title: "Home page"
+      message: "XSS Prevention Example"
   });
 });
 
 app.get('/new', function(req, res) {
   res.render('new', {
     title: 'New Entry',
-    title: "New Employee Entry Page"
+    message: "New Employee Entry Page"
   });
 });
 
 app.post("/process", function(request, response) {
-  // console.log(request.body.txtName);
-  if (!request.body.firstName && !request.body.lastName) {
-      response.status(400).send("Entries must have a name");
-      return;
-  }
-  // get the request's form data
-  const employeeName = request.body.firstName + request.body.lastName;
-  console.log(employeeName);
-  // create an employee model
-  const employee = new Employee({
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-  });
-  // save
-  employee.save(function (error) {
-    if (error) throw error;
-    console.log(employeeName + " saved successfully!");
-  });
+  console.log(request.body.txtName + request.body.lastName);
   response.redirect("/");
 });
 

@@ -6,30 +6,52 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('header') %>
+  <%- include('header'); -%>
 
 <body>
-  <%- include('navbar') %>
+  <%- include('navbar'); -%>
 
-  <div role="main" class="container" style="width: 30%;">
-    <br /><br />
+  <div role="main" class="container">
+    <br /> <br />
+    <h1 class="text-primary jumbotron" style="height: 10px; text-align: center;">Employee Records</h1>
+       <h2 style="text-align: center;" class="text-info">Entry Employees information.</h2>
     <div class="container">
-      <div class="jumbotron"> 
-         <h1 class="text-primary">Employee Records</h1>
-         <br />
-          <p class="text-info">An application for displaying employee records.</p>
+    <div class="container mx-auto px-6 pt-10" style="width: 60%">
+     
+      <div class="card">
+        <table class="table hover">
+          <thead class="bg-info" style="text-align: center;">
+            <tr>
+              <th class="text-white border border-white">First Name</th>
+              <th class="text-white border border-white">Last Name</th>
+              <th class="text-white border border-white">DOB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border border-info">
+              <td class="text-muted">soliman</td>
+              <td class="text-muted">Elmalak</td>
+              <td style="text-align: center" class="bg-white">
+                00/00/0000
+              </td>
+            </tr>
+          </tbody>
+        </table>          
       </div>
-      <div role="main" class="container" style="width: 60%">
-        <br /><br />
-  
-        <% include list %>
-  
-        <br /><br />
-  
-        <% include footer %>
+
+      <div style="text-align: center;" class="mb-10">
+        <a href="/new">
+         <button
+          class=" font-bold py-2 px-4 rounded">
+            Add
+         </button>
+        </a>
       </div>
-   
+      
+        
   </div>
+  <%- include('footer'); -%>
+
 </body>
-    <%- include('scripts') %>
+
 </html>
