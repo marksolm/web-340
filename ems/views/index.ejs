@@ -6,26 +6,30 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-<% include header %>
+  <%- include('header') %>
 
 <body>
-<% include navbar %>
+  <%- include('navbar') %>
 
-<div role="main" class="container" style="width: 30%;">
-  <br /><br />
-  <div class="container">
-    <div class="jumbotron"> 
-      <h1 class="text-primary">Employee Records</h1>
-      <%= message %>   
-       <br />
-       <p class="text-info">An application for displaying employee records.</p>
-    </div>
+  <div role="main" class="container" style="width: 30%;">
+    <br /><br />
+    <div class="container">
+      <div class="jumbotron"> 
+         <h1 class="text-primary">Employee Records</h1>
+         <br />
+          <p class="text-info">An application for displaying employee records.</p>
+      </div>
+      <div role="main" class="container" style="width: 60%">
+        <br /><br />
+  
+        <% include list %>
+  
+        <br /><br />
+  
+        <% include footer %>
+      </div>
+   
   </div>
-  <br /><br />
-    <div role="main" class="container" style="width: 60%">
-      <br /><br />
-      <% include footer %>
-    </div>
-  <% include scripts %>
 </body>
+    <%- include('scripts') %>
 </html>

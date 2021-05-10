@@ -1,0 +1,27 @@
+<% if  (employees.length > 0) { %>
+    <h2 class="text-muted" style="display: inline-block;" >Current Employees </h2><br />
+    <a class="btn btn-secondary bg-info border border-light" style="float: right;" href="/new">Add New</a>
+    <br /><br />
+    <table class="table hover">
+      <thead class="bg-info" style="text-align: center;">
+        <tr>
+          <th class="text-white border border-white">First Name</th>
+          <th class="text-white border border-white">Last Name</th>
+          <th class="text-white border border-white">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% employees.forEach(function(employee) { %>
+        <tr class="border border-info">
+          <td class="text-muted"><%= employee.firstName %></td>
+          <td class="text-muted"><%= employee.lastName %></td>
+          <td style="text-align: center" class="bg-white">
+            <a class="text-info" href="/view/<%= employee.lastName %>" style="text-decoration: none;">View</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } else { %>
+     <h3> There are no current employees! <a href="/new" class="btn btn-secondary bg-info border border-light">Add one!</a></h3>
+    <% } %>

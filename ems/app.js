@@ -20,18 +20,21 @@ const helmet = require("helmet");
 // setup csrf protection
 let csrfProtection = csrf({cookie: true});
 
-
 // connect to mongoose database
 var mongoDB = 'mongodb+srv://Soliman:Abdelmalak_@cluster0.rpzcn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, {
-  useMongoClient: true
+    useNewUrlParser: true ,
+    useUnifiedTopology: true
 });
+
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "MongoDB connection error: "));
 db.once('open', function() {
   console.log('Application connected to nLab MongoDB instance');
 });
+
+// application
 var app = express();
 
 /**
@@ -59,56 +62,45 @@ app.use(function(request, response, next) {
   next();
 });
 
-
-// Create the Employee Model
-let employee = new Employee({
-  firstName: "firstName",
-  lastName: "lastName",
+// http calls
+app.get("/", function (request, response) {
+  Employee.find({}, function (error, employees) {
+    if (error) throw error;
+    if (employees.length > 0)
+      response.render("index", {
+        title: "Employee List",
+        message: "Employee Records",
+        employees: employees,
+      });
+  });
 });
 
 app.get('/new', function(req, res) {
   res.render('new', {
     title: 'New Entry',
-    message: "New Employee Entry Page"
-  });
-})
-
-app.get("/", function (request, response) {
- 
-  response.render("index", {
-
-      title: "Home page"
+    title: "New Employee Entry Page"
   });
 });
 
-// Create a function that accept and response to the about page request.
-app.get("/about", function(request, response) {
-  response.render("about", {
-      message: "about page"
-  });
-});
-// Create a function that accept and response to the contact page request.
-app.get("/contact", function(request, response) {
-  response.render("contact", {
-      message: "contact page"
-  });
-});
-// Create a function that accept and response to the products page request.
-app.get("/products", function(request, response) {
- response.render("products", {
-     message: "products page"
- });
-});
-
- // http calls
-app.get("/", function(request, response) {
-  response.render("index", {
-      message: "XSS Prevention Example"
-  });
-
-});
 app.post("/process", function(request, response) {
-  console.log(request.body.txtName);
+  // console.log(request.body.txtName);
+  if (!request.body.firstName && !request.body.lastName) {
+      response.status(400).send("Entries must have a name");
+      return;
+  }
+  // get the request's form data
+  const employeeName = request.body.firstName + request.body.lastName;
+  console.log(employeeName);
+  // create an employee model
+  const employee = new Employee({
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+  });
+  // save
+  employee.save(function (error) {
+    if (error) throw error;
+    console.log(employeeName + " saved successfully!");
+  });
   response.redirect("/");
 });
 
