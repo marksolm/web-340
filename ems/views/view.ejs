@@ -1,0 +1,50 @@
+<!-- 
+Title: view.ejs
+Author: Soliman Abdelmalak
+Date: 05/10/2021
+Description: Views the Employee Record .
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <% include header %>
+
+  <body>
+    <% include navbar %>
+
+    <div role="main" class="container" style="width: 50%;">
+      <br />
+
+      <h2>View Employee Information</h2>
+      <br />
+      <div class="form-row center-input">
+        <div class="form-group col-sm-6 center">
+          <label for="firstName">First Name:</label>
+          <input type="text" class="form-control" id="firstName" name="firstName" readonly value="<%= employee[0].firstName %>" name="firstName" />
+        </div>
+      
+        <div class="form-group col-sm-6 center">
+          <label for="lastName">Last Name:</label>
+          <input type="text" class="form-control" id="lastName" name="lastName" readonly value="<%= employee[0].lastName %>" name="lastName" />
+        </div>
+      
+        <div class="form-group col-sm-6 center">
+          <label for="position">position:</label>
+          <input type="text" class="form-control" id="position" name="position" readonly value="<%= employee[0].position %>" name="position" />
+        </div>
+      
+        <div class="form-group col-sm-6 center">
+          <label for="DOB">Date of Birth:</label>
+          <input type="text" class="form-control" id="DOB" name="DOB" readonly value="<%= employee[0].DOB %>" name="DOB" />
+        </div>
+        <br /><br />
+      </div>
+
+      <br /><br />
+
+      <p class="alignBackNav"><a href="/list" style="color: white">&larr;&nbsp;Back to List</a></p>
+    </div>
+    <%- include("footer") %>
+    <% include scripts %>
+  </body>
+</html>

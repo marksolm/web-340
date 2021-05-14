@@ -1,40 +1,50 @@
+<!--
+; Title:  new.ejs
+; Author: Soliman Abdelmalak
+; Date:   04/22/2021
+; Description: new page for EMS Project.! 
+-->
+
 <!DOCTYPE html>
 <html lang="en">
-  <% include header %>
-
+  <%- include('header') %>
   <body>
-    <% include navbar %>
-
-    <div role="main" class="container" style="width: 50%;">
+    <%- include('navbar') %>
+    <div role="main" class="container mx-auto px-6 pt-10" style="width: 50%;">
       <br /><br />
-
-      <h2>-- Employee Entry Page --</h2>
-      <form action="/process" method="post">
-        <div class="form-group">
+    <h1 class="text-primary jumbotron" style="height: 10px; text-align: center;">Employee Entry Page</h1>
+    <br />
+    <h2 style="text-align: center;" class="text-info">Add a new employee</h2>
+    <form method="post" action="/process">
+      <div class="form-group">
           <div class="mb-2">
-            <label class="block font-bold mb-2" for="txtName">First Name</label>
-            <input type="text" class="form-control" id="txtName" name="firstName"/>
+            <label class="block font-bold mb-2" for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName"/>
           </div>
           <div class="mb-2">
             <label class="block font-bold mb-2" for="lastName">Last Name</label>
             <input type="text" class="form-control" id="lastName" name="lastName"/>
           </div>
+          <div class="mb-2">
+            <label class="block font-bold mb-2" for="position">position</label>
+            <input type="text" class="form-control" id="position" name="position"/>
+          </div>
+          <div class="mb-2">
+            <label class="block font-bold mb-2" for="DOB">Date of Birth</label>
+            <input type="date" class="form-control" id="DOB" name="DOB"/>
+          </div>
         </div>
-      
-        <div class="form-group">
-          <!-- CSRF token -->
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
-      
-          <button type="submit" class="btn btn-secondary float-right">
-            Submit
-          </button>
-        </div>
-      </form>
-      <br /><br />
-
-      <a href="/">Return to Employee</a>
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
     </div>
-
-    <% include scripts %>
+    </div>
+      <div>
+    <!-- CSRF token -->
+    <input name="_csrf" value="<%= csrfToken %>" type="hidden" />
+    </form>
+  </div>
+  <%- include('footer'); -%>
+  <%- include("scripts") %>
   </body>
-  <% include footer %>
+</html>

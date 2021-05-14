@@ -13,45 +13,40 @@
 
   <div role="main" class="container">
     <br /> <br />
-    <h1 class="text-primary jumbotron" style="height: 10px; text-align: center;">Employee Records</h1>
+    <h1 class="text-primary jumbotron" style="height: 10px; text-align: center;">EMS Employees Records</h1><br />
        <h2 style="text-align: center;" class="text-info">Entry Employees information.</h2>
+
     <div class="container">
     <div class="container mx-auto px-6 pt-10" style="width: 60%">
-     
-      <div class="card">
-        <table class="table hover">
-          <thead class="bg-info" style="text-align: center;">
-            <tr>
-              <th class="text-white border border-white">First Name</th>
-              <th class="text-white border border-white">Last Name</th>
-              <th class="text-white border border-white">DOB</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border border-info">
-              <td class="text-muted">soliman</td>
-              <td class="text-muted">Elmalak</td>
-              <td style="text-align: center" class="bg-white">
-                00/00/0000
-              </td>
-            </tr>
-          </tbody>
-        </table>          
+        <br /> 
       </div>
-
-      <div style="text-align: center;" class="mb-10">
-        <a href="/new">
-         <button
-          class=" font-bold py-2 px-4 rounded">
-            Add
-         </button>
-        </a>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">New Employee</h5>
+              <h6 class="card-text text-info">Add a new employee information</h6>
+              <a href="/new" class="btn btn-primary">Add</a>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"> Employees </h5>
+              <h6 class="card-text text-info">View a list of all current employees.</h6>
+              <a href="/list" class="btn btn-primary">View</a>
+            </div>
+          </div>
+        </div>
       </div>
-      
-        
   </div>
-  <%- include('footer'); -%>
+  <br /> <br />
+  <br /> <br />
 
+  <%- include('footer'); -%>
+  <%- include("scripts") %>
 </body>
 
 </html>

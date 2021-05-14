@@ -16,6 +16,7 @@ const cookieParser = require("cookie-parser");
 const csrf = require("csurf");
 const mongoose = require('mongoose');
 const helmet = require("helmet");
+const { response } = require('express');
 
 // setup csrf protection
 let csrfProtection = csrf({cookie: true});
@@ -24,7 +25,7 @@ let csrfProtection = csrf({cookie: true});
 var mongoDB = 'mongodb+srv://Soliman:Abdelmalak_@cluster0.rpzcn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, {
     useNewUrlParser: true ,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
 });
 
 mongoose.Promise = global.Promise;
@@ -37,13 +38,6 @@ db.once('open', function() {
 // application
 var app = express();
 
-/**
- * Sets up the view engine, view's directory path, and the server port.
- */
- app.set("views", path.resolve(__dirname, "views"));
- app.set("view engine", "ejs");
- app.set("port", process.env.PORT || 8080);
- 
 app.use(logger("short"));//use morgan for logging
 // Body parser
 app.use(bodyParser.urlencoded({
@@ -63,20 +57,21 @@ app.use(function(request, response, next) {
   next();
 });
 
-app.post("/process", function(request, response) {
-  console.log(request.body.txtName);
-  response.redirect("/");
-});
-
+/**
+  Sets up the view engine, view's directory path, and the server port.
+ */
+ app.set("views", path.resolve(__dirname, "views"));
+ app.set("view engine", "ejs");
+ app.set("port", process.env.PORT || 8080);
 
 // Standard req and res function.
 app.get("/", function (req, res) {
   res.render("index", {
-      title: "Home page"
-      message: "XSS Prevention Example"
+      title: "Employee Records",
+      message: "XSS Prevention Example",
   });
 });
-
+// Response to the new page
 app.get('/new', function(req, res) {
   res.render('new', {
     title: 'New Entry',
@@ -84,10 +79,74 @@ app.get('/new', function(req, res) {
   });
 });
 
-app.post("/process", function(request, response) {
-  console.log(request.body.txtName + request.body.lastName);
-  response.redirect("/");
+// Response to the list page
+app.get("/list", function (request, response) {
+  Employee.find({}, function (error, employees) {
+    if (error) throw error;
+    if (employees.length > 0)
+      response.render("list", {
+        title: "List",
+        employees: employees,
+      });
+  });
 });
+
+// post a request to the form
+app.post("/process", function(request, response) {
+  console.log(request.body.firstName, request.body.lastName);
+  if (!request.body.firstName || !request.body.lastName) {
+    response.status(400).send("Entries must have a name");
+    return;
+  }
+
+// get the request's form data
+const firstName = request.body.firstName;
+const lastName = request.body.lastName;
+console.log(firstName, lastName);
+
+// create the employee model
+const employee = new Employee({
+  firstName: firstName,
+  lastName: lastName,
+  position: request.body.position,
+  DOB: request.body.DOB,
+});
+
+// save THE new employee
+employee.save(function (err) {
+  if (err) {
+    console.log(err);
+    throw err;
+  } else {
+    console.log(firstName + " " + lastName + " saved successfully!");
+  }
+});
+response.redirect("/list");
+});
+
+//views an employee's information
+app.get("/view/:queryName", function (req, res) {
+var queryName = req.params["queryName"];
+Employee.find({ lastName: queryName }, function (error, employees) {
+  if (error) {
+    console.log(error);
+    throw error;
+  } else {
+    console.log(employees);
+
+    if (employees.length > 0) {
+      res.render("view", {
+        title: "Employee Record",
+        employee: employees,
+      })
+    }
+    else {
+      response.redirect("/list")
+    }
+  }
+});
+});
+
 
 // create/start Node server
 http.createServer(app).listen(8080, function() {

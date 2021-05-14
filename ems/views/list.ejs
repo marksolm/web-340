@@ -1,27 +1,45 @@
+<!--
+; Title:  list.ejs
+; Author: Soliman Abdelmalak
+; Date:   05/10/2021
+; Description: Index for EMS Project.! 
+-->
+
+<!-- Include the views for the header and navigation bar -->
+<%- include("header") %>
+<%- include("navbar") %>
+</br > 
 <% if  (employees.length > 0) { %>
-    <h2 class="text-muted" style="display: inline-block;" >Current Employees </h2><br />
-    <a class="btn btn-secondary bg-info border border-light" style="float: right;" href="/new">Add New</a>
-    <br /><br />
-    <table class="table hover">
-      <thead class="bg-info" style="text-align: center;">
+  <h1 class="text-primary jumbotron" style="height: 10px; text-align: center;">Current Employees</h1>    <br />
+    <table class="table table-bordered border-primary" style="width: 60%; margin-left: 300px;">
+      <thead class="bg-info">
         <tr>
           <th class="text-white border border-white">First Name</th>
           <th class="text-white border border-white">Last Name</th>
-          <th class="text-white border border-white">Edit</th>
+          <th class="text-white border border-white">position</th>
+          <th class="text-white border border-white">DOB</th>
         </tr>
       </thead>
       <tbody>
         <% employees.forEach(function(employee) { %>
         <tr class="border border-info">
-          <td class="text-muted"><%= employee.firstName %></td>
-          <td class="text-muted"><%= employee.lastName %></td>
-          <td style="text-align: center" class="bg-white">
-            <a class="text-info" href="/view/<%= employee.lastName %>" style="text-decoration: none;">View</a>
+          <td class="text-dark"><%= employee.firstName %></td>
+          <td class="text-dark"><%= employee.lastName %></td>
+          <td class="text-dark"><%= employee.position %></td>
+          <td class="text-dark"><%= employee.DOB %></td>
           </td>
         </tr>
+
         <% }) %>
       </tbody>
     </table>
+    <h5><a class="btn btn-primary" style="margin-left: 300px" href="/new">Add New Employee</a></h5>
+
+    <br >  <br >
+
     <% } else { %>
      <h3> There are no current employees! <a href="/new" class="btn btn-secondary bg-info border border-light">Add one!</a></h3>
     <% } %>
+    <!-- Include the footer and the scripts -->
+    <%- include("footer") %>
+   <%- include("scripts") %>
