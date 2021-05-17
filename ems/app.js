@@ -18,11 +18,11 @@ const mongoose = require('mongoose');
 const helmet = require("helmet");
 const { response } = require('express');
 
+
 // setup csrf protection
 let csrfProtection = csrf({cookie: true});
-
 // connect to mongoose database
-var mongoDB = 'mongodb+srv://Soliman:Abdelmalak_@cluster0.rpzcn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+var mongoDB = process.env.MONGODB_URL || 'mongodb+srv://Soliman:Abdelmalak_@cluster0.rpzcn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 mongoose.connect(mongoDB, {
     useNewUrlParser: true ,
     useUnifiedTopology: true,
